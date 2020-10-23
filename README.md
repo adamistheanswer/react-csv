@@ -8,9 +8,10 @@
 
 # Fork of react-csv project
 
-Added Features
+Change log from base project
 
-- Download component can now take filename 
+- Download component can now take filename  [ #137](https://github.com/react-csv/react-csv/pull/137)
+- Package vulnerabilities fixed
 
 # Overview :
 
