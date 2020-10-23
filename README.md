@@ -6,6 +6,12 @@
 [![Build Status](https://travis-ci.org/abdennour/react-csv.svg?branch=master)](https://travis-ci.org/abdennour/react-csv)
 [![Coverage Status](https://coveralls.io/repos/github/abdennour/react-csv/badge.svg?branch=master)](https://coveralls.io/github/abdennour/react-csv?branch=master)
 
+# Fork of react-csv project
+
+Added Features
+
+- Download component can now take filename 
+
 # Overview :
 
 Generate a CSV file from given data.
@@ -33,7 +39,7 @@ For more examples, see [here 👈🏼](http://react-csv.github.io/react-csv/)
 # Install
 
 ```
-npm install react-csv --save;
+npm install react-csv-fork --save;
 ```
 
 Or for non-node developers, you can use CDN directly:
