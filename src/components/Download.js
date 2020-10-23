@@ -1,47 +1,23 @@
-import React from 'react';
-import {buildURI} from '../core';
-import {
-   defaultProps as commonDefaultProps,
-   propTypes as commonPropTypes} from '../metaProps';
-const defaultProps = {
-  target: '_blank'
-};
+import React from "react";
+import CSVLink from "./Link";
 
-/**
- *
- * @example ../../sample-site/csvdownload.example.md
- */
 class CSVDownload extends React.Component {
-
-  static defaultProps = Object.assign(
-    commonDefaultProps,
-    defaultProps
-  );
-
-  static propTypes = commonPropTypes;
-
   constructor(props) {
     super(props);
-    this.state={};
+    this.state = { hasTriggered: false };
+    this.handleRef = this.handleRef.bind(this);
   }
 
-  buildURI() {
-    return buildURI(...arguments);
+  handleRef(ref) {
+    if (ref) {
+      ref.link.click();
+      this.setState({ hasTriggered: true });
+    }
   }
 
-  componentDidMount(){
-    const {data, headers, separator, enclosingCharacter, uFEFF, target, specs, replace} = this.props;
-    this.state.page = window.open(
-        this.buildURI(data, uFEFF, headers, separator, enclosingCharacter), target, specs, replace
-    );
-  }
-
-  getWindow() {
-    return this.state.page;
-  }
-
-  render(){
-    return (null)
+  render() {
+    if (this.state.hasTriggered) return null;
+    return <CSVLink ref={this.handleRef} {...this.props} />;
   }
 }
 

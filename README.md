@@ -6,6 +6,13 @@
 [![Build Status](https://travis-ci.org/abdennour/react-csv.svg?branch=master)](https://travis-ci.org/abdennour/react-csv)
 [![Coverage Status](https://coveralls.io/repos/github/abdennour/react-csv/badge.svg?branch=master)](https://coveralls.io/github/abdennour/react-csv?branch=master)
 
+# Fork of react-csv project
+
+Change log from base project
+
+- Download component can now take filename [ #137](https://github.com/react-csv/react-csv/pull/137)
+- Package vulnerabilities fixed
+
 # Overview :
 
 Generate a CSV file from given data.
@@ -21,7 +28,7 @@ const csvData = [
   ["firstname", "lastname", "email"],
   ["Ahmed", "Tomi", "ah@smthing.co.com"],
   ["Raed", "Labes", "rl@smthing.co.com"],
-  ["Yezzi", "Min l3b", "ymin@cocococo.com"]
+  ["Yezzi", "Min l3b", "ymin@cocococo.com"],
 ];
 <CSVLink data={csvData}>Download me</CSVLink>;
 // or
@@ -33,13 +40,16 @@ For more examples, see [here 👈🏼](http://react-csv.github.io/react-csv/)
 # Install
 
 ```
-npm install react-csv --save;
+npm install react-csv-fork --save;
 ```
 
 Or for non-node developers, you can use CDN directly:
 
 ```html
-<script src="https://cdn.rawgit.com/abdennour/react-csv/6424b500/cdn/react-csv-latest.min.js" type="text/javascript"></script>
+<script
+  src="https://cdn.rawgit.com/abdennour/react-csv/6424b500/cdn/react-csv-latest.min.js"
+  type="text/javascript"
+></script>
 ```
 
 # Components:
@@ -63,7 +73,7 @@ data = [
   ["firstname", "lastname", "email"],
   ["Ahmed", "Tomi", "ah@smthing.co.com"],
   ["Raed", "Labes", "rl@smthing.co.com"],
-  ["Yezzi", "Min l3b", "ymin@cocococo.com"]
+  ["Yezzi", "Min l3b", "ymin@cocococo.com"],
 ];
 ```
 
@@ -74,7 +84,7 @@ data = [
 data = [
   { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
   { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
-  { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" }
+  { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" },
 ];
 ```
 
@@ -121,13 +131,13 @@ import { CSVLink } from "react-csv";
 headers = [
   { label: "First Name", key: "firstname" },
   { label: "Last Name", key: "lastname" },
-  { label: "Email", key: "email" }
+  { label: "Email", key: "email" },
 ];
 
 data = [
   { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
   { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
-  { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" }
+  { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" },
 ];
 
 <CSVLink data={data} headers={headers}>
@@ -141,16 +151,17 @@ It is possible to reference nested strings in your data using dot notation
 
 ```js
 headers = [
-  { label: 'First Name', key: 'details.firstName' },
-  { label: 'Last Name', key: 'details.lastName' },
-  { label: 'Job', key: 'job' },
+  { label: "First Name", key: "details.firstName" },
+  { label: "Last Name", key: "details.lastName" },
+  { label: "Job", key: "job" },
 ];
 
 data = [
-  { details: { firstName: 'Ahmed', lastName: 'Tomi' }, job: 'manager'},
-  { details: { firstName: 'John', lastName: 'Jones' }, job: 'developer'},
+  { details: { firstName: "Ahmed", lastName: "Tomi" }, job: "manager" },
+  { details: { firstName: "John", lastName: "Jones" }, job: "developer" },
 ];
 ```
+
 Note: if at any point the nested keys passed do not exist then looks for key with dot notation in the object.
 
 ### - **separator** Props:
@@ -161,8 +172,8 @@ Following a request to add [this feature](https://github.com/react-csv/react-csv
 import { CSVLink } from "react-csv";
 
 <CSVLink data={array} separator={";"}>
-    Download me
-</CSVLink>
+  Download me
+</CSVLink>;
 
 /*
     "foo";"bar"
@@ -174,19 +185,17 @@ import { CSVLink } from "react-csv";
 
 Following a request to add [this feature](https://github.com/react-csv/react-csv/issues/68), `react-csv` supports an `enclosingCharacter` prop which defaults to `"`.
 
-
 ```js
-import {CSVLink} from 'react-csv';
+import { CSVLink } from "react-csv";
 
 <CSVLink data={array} enclosingCharacter={`'`}>
-    Download me
-</CSVLink>
+  Download me
+</CSVLink>;
 
 /*
     'foo','bar'
     'a','b'
  */
-
 ```
 
 ## 1. CSVLink Component:
@@ -249,7 +258,7 @@ import { CSVLink } from "react-csv";
 
 <CSVLink
   data={data}
-  onClick={event => {
+  onClick={(event) => {
     console.log("You click the link");
     return false; // 👍🏻 You are stopping the handling of component
   }}
@@ -317,15 +326,18 @@ import { CSVDownload } from "react-csv";
 For non-node developers, they have to use CDN version :
 
 ```html
- <script src="https://cdn.rawgit.com/abdennour/react-csv/6424b500/cdn/react-csv-latest.min.js" type="text/javascript"></script>
+<script
+  src="https://cdn.rawgit.com/abdennour/react-csv/6424b500/cdn/react-csv-latest.min.js"
+  type="text/javascript"
+></script>
 
- <script type="text/babel">
-   const {CSVDownload, CSVLink} = ReactCSV;// or window.ReactCSV
+<script type="text/babel">
+  const { CSVDownload, CSVLink } = ReactCSV; // or window.ReactCSV
 
-   const element= (<CSVDownload data={data} target="_blank" />);
+  const element = <CSVDownload data={data} target="_blank" />;
 
-   ReactDOM.render(element, document.querySelector('#app'));
- </script>
+  ReactDOM.render(element, document.querySelector("#app"));
+</script>
 ```
 
 # Contribution :

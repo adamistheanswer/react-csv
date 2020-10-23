@@ -1,9 +1,10 @@
 {
-  "name": "react-csv",
-  "version": "2.0.3",
-  "description": "Build CSV files on the fly basing on Array/literal object of data ",
+  "name": "react-csv-fork",
+  "version": "2.1.1",
+  "description": "Build CSV files on the fly basing on Array/literal object of data [fork]",
   "main": "index.js",
   "jsnext:main": "src/index.js",
+  "homepage": "https://github.com/adamistheanswer/react-csv#readme",
   "scripts": {
     "cdn": "node cdn/generator.js",
     "compile": "babel -d lib/ src/ --no-comments",
@@ -36,12 +37,11 @@
     "babel",
     "IE11"
   ],
-  "author": "Abdennour TOUMI <http://abdennoor.com>",
+  "author": "Adam Robinson <http://attackingpixels.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/react-csv/react-csv/issues"
+    "url": "https://github.com/adamistheanswer/react-csv/issues"
   },
-  "homepage": "https://github.com/react-csv/react-csv#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.18.2",

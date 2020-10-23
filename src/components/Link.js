@@ -1,94 +1,81 @@
-import React from 'react';
-import { buildURI, toCSV } from '../core';
+import React from "react";
+import { buildURI, toCSV } from "../core";
 import {
   defaultProps as commonDefaultProps,
-  propTypes as commonPropTypes
-} from '../metaProps';
+  propTypes as commonPropTypes,
+} from "../metaProps";
 
-/**
- *
- * @example ../../sample-site/csvlink.example.md
- */
 class CSVLink extends React.Component {
   static defaultProps = commonDefaultProps;
   static propTypes = commonPropTypes;
 
   constructor(props) {
     super(props);
-    this.buildURI = this.buildURI.bind(this);
-    this.state = { href: '' };
+    this.getURI = this.getURI.bind(this);
   }
 
-  componentDidMount() {
-    const {data, headers, separator, uFEFF, enclosingCharacter} = this.props;
-    this.setState({ href: this.buildURI(data, uFEFF, headers, separator, enclosingCharacter) });
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props !== prevProps) {
-      const { data, headers, separator, uFEFF } = this.props;
-      this.setState({ href: this.buildURI(data, uFEFF, headers, separator) });
+  // Caches a single value of the built data URI.
+  getURI() {
+    const { data, headers, separator, uFEFF } = this.props;
+    if (
+      this._data !== data ||
+      this._headers !== headers ||
+      this._separator !== separator ||
+      this._uFEFF === uFEFF
+    ) {
+      this._uri = buildURI(data, uFEFF, headers, separator);
+      this._data = data;
+      this._headers = headers;
+      this._separator = separator;
+      this._uFEFF = uFEFF;
     }
+    return this._uri;
   }
 
-  buildURI() {
-    return buildURI(...arguments);
-  }
-
-  /**
-   * In IE11 this method will trigger the file download
-   */
-  handleLegacy(event) {
+  handleLegacy(event, data, headers, separator, filename, enclosingCharacter) {
     // If this browser is IE 11, it does not support the `download` attribute
     if (window.navigator.msSaveOrOpenBlob) {
       // Stop the click propagation
       event.preventDefault();
 
-      const {
-        data,
-        headers,
-        separator,
-        filename,
-        enclosingCharacter,
-        uFEFF
-      } = this.props;
-
-      let blob = new Blob([uFEFF ? '\uFEFF' : '', toCSV(data, headers, separator, enclosingCharacter)]);
+      let blob = new Blob([
+        toCSV(data, headers, separator, enclosingCharacter),
+      ]);
       window.navigator.msSaveBlob(blob, filename);
 
       return false;
     }
   }
 
-  handleAsyncClick(event) {
-    const done = proceed => {
+  handleAsyncClick(event, ...args) {
+    const done = (proceed) => {
       if (proceed === false) {
         event.preventDefault();
         return;
       }
-      this.handleLegacy(event);
+      this.handleLegacy(event, ...args);
     };
 
     this.props.onClick(event, done);
   }
 
-  handleSyncClick(event) {
+  handleSyncClick(event, ...args) {
     const stopEvent = this.props.onClick(event) === false;
     if (stopEvent) {
       event.preventDefault();
       return;
     }
-    this.handleLegacy(event);
+    this.handleLegacy(event, ...args);
   }
 
-  handleClick() {
-    return event => {
-      if (typeof this.props.onClick === 'function') {
+  handleClick(...args) {
+    return (event) => {
+      if (typeof this.props.onClick === "function") {
         return this.props.asyncOnClick
-          ? this.handleAsyncClick(event)
-          : this.handleSyncClick(event);
+          ? this.handleAsyncClick(event, ...args)
+          : this.handleSyncClick(event, ...args);
       }
-      this.handleLegacy(event);
+      this.handleLegacy(event, ...args);
     };
   }
 
@@ -110,10 +97,16 @@ class CSVLink extends React.Component {
       <a
         download={filename}
         {...rest}
-        ref={link => (this.link = link)}
+        ref={(link) => (this.link = link)}
         target="_self"
-        href={this.state.href}
-        onClick={this.handleClick()}
+        href={this.getURI()}
+        onClick={this.handleClick(
+          data,
+          headers,
+          separator,
+          filename,
+          enclosingCharacter
+        )}
       >
         {children}
       </a>
